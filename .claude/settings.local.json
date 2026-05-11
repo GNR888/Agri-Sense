@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/giuliorobilliard/Desktop/Agri-Sense/.venv/bin/python *)",
+      "Bash(awk '{print $1, $2, $3, $11, $12}')",
+      "Bash(PYTHONPATH=/Users/giuliorobilliard/Desktop/Agri-Sense/src .venv/bin/python3 *)",
+      "Bash(PYTHONPATH=src .venv/bin/python3 *)",
+      "Bash(awk '{print $2, $11, $12, $13}')",
+      "Bash(pkill -f \"uvicorn agri_sense\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(timeout 8 .venv/bin/python3 -c ' *)",
+      "Bash(brew list *)",
+      "Bash(brew install *)",
+      "Bash(otool -L .venv/lib/python3.14/site-packages/sklearn/utils/_openmp_helpers.cpython-314-darwin.so)",
+      "Bash(otool *)",
+      "Bash(xattr -r -d com.apple.quarantine .venv/lib/python3.14/site-packages/sklearn/)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-eslint --import-alias \"@/*\" --yes)",
+      "Bash(npm install *)",
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(.venv/bin/python -m pytest tests/ -x -q)",
+      "Bash(PYTHONPATH=src uv run *)",
+      "Bash(chflags nohidden *)",
+      "Bash(npx tsc *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(uv run *)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(/usr/bin/git --version)",
+      "Bash(/usr/bin/git -C /Users/giuliorobilliard/Desktop/Agri-Sense status)",
+      "Bash(xcode-select -p)",
+      "Read(//Library/Developer/CommandLineTools/usr/bin/**)",
+      "Bash(gh api *)"
+    ]
+  }
+}

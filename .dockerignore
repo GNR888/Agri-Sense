@@ -1,0 +1,33 @@
+# Runtime environments — never in the image
+.venv/
+**/__pycache__/
+**/*.py[cod]
+
+# Frontend (deployed separately to Vercel)
+app/
+
+# Dev / test artifacts
+tests/
+notebooks/
+scripts/
+conftest.py
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# Secrets and local config
+.env
+.env.*
+
+# Docs / meta
+README.md
+CLAUDE.md
+agri-sense-build-prompts.md
+.gitignore
+.git/
+
+# Raw data caches written at runtime — not needed in image
+data/raw/open_meteo/
+data/raw/sentinel/
+data/raw/nasa_power/
+data/interim/

@@ -1,0 +1,11 @@
+{
+  "bulk_density_kg_per_dm3": 1.2433,
+  "cec_mmol_per_kg": 159.0,
+  "clay_pct": 36.1,
+  "nitrogen_cg_per_kg": 159.8333,
+  "ph": 5.9833,
+  "sand_pct": 30.0333,
+  "silt_pct": 33.8667,
+  "soc_g_per_kg": 21.9667,
+  "soil_texture_class": "clay loam"
+}

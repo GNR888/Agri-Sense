@@ -1,0 +1,199 @@
+province,year,season,crop,area_ha,production_tonnes,yield_tonnes_per_ha,source
+Cần Thơ,2018,Đông Xuân,rice,80200,539142,6.72,curated_mvp_v1
+Cần Thơ,2019,Đông Xuân,rice,80400,543504,6.76,curated_mvp_v1
+Cần Thơ,2020,Đông Xuân,rice,79900,543320,6.80,curated_mvp_v1
+Cần Thơ,2021,Đông Xuân,rice,80300,549252,6.84,curated_mvp_v1
+Cần Thơ,2022,Đông Xuân,rice,80500,553840,6.88,curated_mvp_v1
+Cần Thơ,2023,Đông Xuân,rice,80600,557752,6.92,curated_mvp_v1
+Cần Thơ,2018,Hè Thu,rice,64800,351216,5.42,curated_mvp_v1
+Cần Thơ,2019,Hè Thu,rice,65200,355992,5.46,curated_mvp_v1
+Cần Thơ,2020,Hè Thu,rice,65000,357500,5.50,curated_mvp_v1
+Cần Thơ,2021,Hè Thu,rice,65300,361762,5.54,curated_mvp_v1
+Cần Thơ,2022,Hè Thu,rice,65500,364885,5.57,curated_mvp_v1
+Cần Thơ,2023,Hè Thu,rice,65800,369138,5.61,curated_mvp_v1
+Cần Thơ,2018,Mùa,rice,50100,241482,4.82,curated_mvp_v1
+Cần Thơ,2019,Mùa,rice,50200,243972,4.86,curated_mvp_v1
+Cần Thơ,2020,Mùa,rice,49800,243522,4.89,curated_mvp_v1
+Cần Thơ,2021,Mùa,rice,50300,247979,4.93,curated_mvp_v1
+Cần Thơ,2022,Mùa,rice,50400,250488,4.97,curated_mvp_v1
+Cần Thơ,2023,Mùa,rice,50500,253005,5.01,curated_mvp_v1
+Cần Thơ,2018,Đông Xuân,maize,4950,25493,5.15,curated_mvp_v1
+Cần Thơ,2019,Đông Xuân,maize,5000,26100,5.22,curated_mvp_v1
+Cần Thơ,2020,Đông Xuân,maize,5050,26664,5.28,curated_mvp_v1
+Cần Thơ,2021,Đông Xuân,maize,5100,27183,5.33,curated_mvp_v1
+Cần Thơ,2022,Đông Xuân,maize,5150,27810,5.40,curated_mvp_v1
+Cần Thơ,2023,Đông Xuân,maize,5200,28392,5.46,curated_mvp_v1
+Cần Thơ,2018,Hè Thu,maize,2950,14809,5.02,curated_mvp_v1
+Cần Thơ,2019,Hè Thu,maize,3000,15210,5.07,curated_mvp_v1
+Cần Thơ,2020,Hè Thu,maize,3050,15586,5.11,curated_mvp_v1
+Cần Thơ,2021,Hè Thu,maize,3100,15996,5.16,curated_mvp_v1
+Cần Thơ,2022,Hè Thu,maize,3150,16412,5.21,curated_mvp_v1
+Cần Thơ,2023,Hè Thu,maize,3200,16896,5.28,curated_mvp_v1
+An Giang,2018,Đông Xuân,rice,184500,1247220,6.76,curated_mvp_v1
+An Giang,2019,Đông Xuân,rice,185200,1261212,6.81,curated_mvp_v1
+An Giang,2020,Đông Xuân,rice,185600,1271360,6.85,curated_mvp_v1
+An Giang,2021,Đông Xuân,rice,186000,1281540,6.89,curated_mvp_v1
+An Giang,2022,Đông Xuân,rice,186500,1292445,6.93,curated_mvp_v1
+An Giang,2023,Đông Xuân,rice,187000,1303390,6.97,curated_mvp_v1
+An Giang,2018,Hè Thu,rice,154200,843474,5.47,curated_mvp_v1
+An Giang,2019,Hè Thu,rice,155000,854050,5.51,curated_mvp_v1
+An Giang,2020,Hè Thu,rice,155500,861470,5.54,curated_mvp_v1
+An Giang,2021,Hè Thu,rice,156000,870480,5.58,curated_mvp_v1
+An Giang,2022,Hè Thu,rice,156500,879630,5.62,curated_mvp_v1
+An Giang,2023,Hè Thu,rice,157000,888820,5.66,curated_mvp_v1
+An Giang,2018,Mùa,rice,119500,581965,4.87,curated_mvp_v1
+An Giang,2019,Mùa,rice,120000,589200,4.91,curated_mvp_v1
+An Giang,2020,Mùa,rice,120500,595270,4.94,curated_mvp_v1
+An Giang,2021,Mùa,rice,121000,602580,4.98,curated_mvp_v1
+An Giang,2022,Mùa,rice,121500,609930,5.02,curated_mvp_v1
+An Giang,2023,Mùa,rice,122000,617320,5.06,curated_mvp_v1
+An Giang,2018,Đông Xuân,maize,8400,43764,5.21,curated_mvp_v1
+An Giang,2019,Đông Xuân,maize,8500,44795,5.27,curated_mvp_v1
+An Giang,2020,Đông Xuân,maize,8600,45838,5.33,curated_mvp_v1
+An Giang,2021,Đông Xuân,maize,8700,46893,5.39,curated_mvp_v1
+An Giang,2022,Đông Xuân,maize,8800,47960,5.45,curated_mvp_v1
+An Giang,2023,Đông Xuân,maize,8900,49039,5.51,curated_mvp_v1
+An Giang,2018,Hè Thu,maize,5400,27324,5.06,curated_mvp_v1
+An Giang,2019,Hè Thu,maize,5500,28215,5.13,curated_mvp_v1
+An Giang,2020,Hè Thu,maize,5600,29008,5.18,curated_mvp_v1
+An Giang,2021,Hè Thu,maize,5700,29925,5.25,curated_mvp_v1
+An Giang,2022,Hè Thu,maize,5800,30682,5.29,curated_mvp_v1
+An Giang,2023,Hè Thu,maize,5900,31624,5.36,curated_mvp_v1
+Đồng Tháp,2018,Đông Xuân,rice,154500,1039785,6.73,curated_mvp_v1
+Đồng Tháp,2019,Đông Xuân,rice,155200,1052256,6.78,curated_mvp_v1
+Đồng Tháp,2020,Đông Xuân,rice,155700,1061874,6.82,curated_mvp_v1
+Đồng Tháp,2021,Đông Xuân,rice,156200,1071532,6.86,curated_mvp_v1
+Đồng Tháp,2022,Đông Xuân,rice,156700,1081230,6.90,curated_mvp_v1
+Đồng Tháp,2023,Đông Xuân,rice,157200,1090968,6.94,curated_mvp_v1
+Đồng Tháp,2018,Hè Thu,rice,129500,703285,5.43,curated_mvp_v1
+Đồng Tháp,2019,Hè Thu,rice,130200,712194,5.47,curated_mvp_v1
+Đồng Tháp,2020,Hè Thu,rice,130700,719957,5.51,curated_mvp_v1
+Đồng Tháp,2021,Hè Thu,rice,131200,728160,5.55,curated_mvp_v1
+Đồng Tháp,2022,Hè Thu,rice,131700,736623,5.59,curated_mvp_v1
+Đồng Tháp,2023,Hè Thu,rice,132200,745086,5.63,curated_mvp_v1
+Đồng Tháp,2018,Mùa,rice,99800,482832,4.84,curated_mvp_v1
+Đồng Tháp,2019,Mùa,rice,100200,488976,4.88,curated_mvp_v1
+Đồng Tháp,2020,Mùa,rice,100600,494952,4.92,curated_mvp_v1
+Đồng Tháp,2021,Mùa,rice,101000,500960,4.96,curated_mvp_v1
+Đồng Tháp,2022,Mùa,rice,101500,507500,5.00,curated_mvp_v1
+Đồng Tháp,2023,Mùa,rice,102000,514080,5.04,curated_mvp_v1
+Sóc Trăng,2018,Đông Xuân,rice,129500,836570,6.46,curated_mvp_v1
+Sóc Trăng,2019,Đông Xuân,rice,130000,845000,6.50,curated_mvp_v1
+Sóc Trăng,2020,Đông Xuân,rice,130500,853470,6.54,curated_mvp_v1
+Sóc Trăng,2021,Đông Xuân,rice,131000,861980,6.58,curated_mvp_v1
+Sóc Trăng,2022,Đông Xuân,rice,131500,870530,6.62,curated_mvp_v1
+Sóc Trăng,2023,Đông Xuân,rice,132000,879120,6.66,curated_mvp_v1
+Sóc Trăng,2018,Hè Thu,rice,109500,567210,5.18,curated_mvp_v1
+Sóc Trăng,2019,Hè Thu,rice,110000,574200,5.22,curated_mvp_v1
+Sóc Trăng,2020,Hè Thu,rice,110500,581230,5.26,curated_mvp_v1
+Sóc Trăng,2021,Hè Thu,rice,111000,588300,5.30,curated_mvp_v1
+Sóc Trăng,2022,Hè Thu,rice,111500,595410,5.34,curated_mvp_v1
+Sóc Trăng,2023,Hè Thu,rice,112000,602560,5.38,curated_mvp_v1
+Sóc Trăng,2018,Mùa,rice,74500,339720,4.56,curated_mvp_v1
+Sóc Trăng,2019,Mùa,rice,75000,345000,4.60,curated_mvp_v1
+Sóc Trăng,2020,Mùa,rice,75500,350320,4.64,curated_mvp_v1
+Sóc Trăng,2021,Mùa,rice,76000,355680,4.68,curated_mvp_v1
+Sóc Trăng,2022,Mùa,rice,76500,361080,4.72,curated_mvp_v1
+Sóc Trăng,2023,Mùa,rice,77000,365750,4.75,curated_mvp_v1
+Đắk Lắk,2018,main,coffee,212000,547000,2.58,curated_mvp_v1
+Đắk Lắk,2019,main,coffee,213500,555100,2.60,curated_mvp_v1
+Đắk Lắk,2020,main,coffee,214000,560680,2.62,curated_mvp_v1
+Đắk Lắk,2021,main,coffee,215000,567600,2.64,curated_mvp_v1
+Đắk Lắk,2022,main,coffee,216000,574560,2.66,curated_mvp_v1
+Đắk Lắk,2023,main,coffee,217000,581560,2.68,curated_mvp_v1
+Đắk Lắk,2018,main,pepper,35500,100110,2.82,curated_mvp_v1
+Đắk Lắk,2019,main,pepper,36000,102960,2.86,curated_mvp_v1
+Đắk Lắk,2020,main,pepper,36500,105120,2.88,curated_mvp_v1
+Đắk Lắk,2021,main,pepper,37000,107940,2.92,curated_mvp_v1
+Đắk Lắk,2022,main,pepper,37500,109875,2.93,curated_mvp_v1
+Đắk Lắk,2023,main,pepper,38000,112860,2.97,curated_mvp_v1
+Đắk Lắk,2018,Đông Xuân,maize,84500,465595,5.51,curated_mvp_v1
+Đắk Lắk,2019,Đông Xuân,maize,85000,473800,5.57,curated_mvp_v1
+Đắk Lắk,2020,Đông Xuân,maize,85500,481365,5.63,curated_mvp_v1
+Đắk Lắk,2021,Đông Xuân,maize,86000,489340,5.69,curated_mvp_v1
+Đắk Lắk,2022,Đông Xuân,maize,86500,497375,5.75,curated_mvp_v1
+Đắk Lắk,2023,Đông Xuân,maize,87000,505470,5.81,curated_mvp_v1
+Đắk Lắk,2018,Hè Thu,maize,67500,363150,5.38,curated_mvp_v1
+Đắk Lắk,2019,Hè Thu,maize,68000,369920,5.44,curated_mvp_v1
+Đắk Lắk,2020,Hè Thu,maize,68500,376750,5.50,curated_mvp_v1
+Đắk Lắk,2021,Hè Thu,maize,69000,383640,5.56,curated_mvp_v1
+Đắk Lắk,2022,Hè Thu,maize,69500,391135,5.63,curated_mvp_v1
+Đắk Lắk,2023,Hè Thu,maize,70000,397900,5.68,curated_mvp_v1
+Lâm Đồng,2018,main,coffee,167000,402970,2.41,curated_mvp_v1
+Lâm Đồng,2019,main,coffee,168000,408240,2.43,curated_mvp_v1
+Lâm Đồng,2020,main,coffee,168500,412825,2.45,curated_mvp_v1
+Lâm Đồng,2021,main,coffee,169000,417630,2.47,curated_mvp_v1
+Lâm Đồng,2022,main,coffee,169500,422355,2.49,curated_mvp_v1
+Lâm Đồng,2023,main,coffee,170000,427200,2.51,curated_mvp_v1
+Lâm Đồng,2018,main,pepper,10800,23976,2.22,curated_mvp_v1
+Lâm Đồng,2019,main,pepper,11000,24530,2.23,curated_mvp_v1
+Lâm Đồng,2020,main,pepper,11200,25312,2.26,curated_mvp_v1
+Lâm Đồng,2021,main,pepper,11400,26220,2.30,curated_mvp_v1
+Lâm Đồng,2022,main,pepper,11600,27144,2.34,curated_mvp_v1
+Lâm Đồng,2023,main,pepper,11800,28084,2.38,curated_mvp_v1
+Gia Lai,2018,main,coffee,97500,228150,2.34,curated_mvp_v1
+Gia Lai,2019,main,coffee,98000,231280,2.36,curated_mvp_v1
+Gia Lai,2020,main,coffee,98500,234630,2.38,curated_mvp_v1
+Gia Lai,2021,main,coffee,99000,237600,2.40,curated_mvp_v1
+Gia Lai,2022,main,coffee,99500,240790,2.42,curated_mvp_v1
+Gia Lai,2023,main,coffee,100000,244000,2.44,curated_mvp_v1
+Gia Lai,2018,main,pepper,14800,30044,2.03,curated_mvp_v1
+Gia Lai,2019,main,pepper,15000,31050,2.07,curated_mvp_v1
+Gia Lai,2020,main,pepper,15200,32072,2.11,curated_mvp_v1
+Gia Lai,2021,main,pepper,15400,32956,2.14,curated_mvp_v1
+Gia Lai,2022,main,pepper,15600,33948,2.18,curated_mvp_v1
+Gia Lai,2023,main,pepper,15800,35076,2.22,curated_mvp_v1
+Gia Lai,2018,main,cashew,20500,24190,1.18,curated_mvp_v1
+Gia Lai,2019,main,cashew,21000,25200,1.20,curated_mvp_v1
+Gia Lai,2020,main,cashew,21500,26230,1.22,curated_mvp_v1
+Gia Lai,2021,main,cashew,22000,27280,1.24,curated_mvp_v1
+Gia Lai,2022,main,cashew,22500,28350,1.26,curated_mvp_v1
+Gia Lai,2023,main,cashew,23000,29440,1.28,curated_mvp_v1
+Gia Lai,2018,Đông Xuân,maize,72500,372350,5.14,curated_mvp_v1
+Gia Lai,2019,Đông Xuân,maize,73000,380330,5.21,curated_mvp_v1
+Gia Lai,2020,Đông Xuân,maize,73500,387045,5.27,curated_mvp_v1
+Gia Lai,2021,Đông Xuân,maize,74000,393680,5.32,curated_mvp_v1
+Gia Lai,2022,Đông Xuân,maize,74500,400910,5.38,curated_mvp_v1
+Gia Lai,2023,Đông Xuân,maize,75000,408000,5.44,curated_mvp_v1
+Gia Lai,2018,Hè Thu,maize,54500,272945,5.01,curated_mvp_v1
+Gia Lai,2019,Hè Thu,maize,55000,278850,5.07,curated_mvp_v1
+Gia Lai,2020,Hè Thu,maize,55500,285270,5.14,curated_mvp_v1
+Gia Lai,2021,Hè Thu,maize,56000,291200,5.20,curated_mvp_v1
+Gia Lai,2022,Hè Thu,maize,56500,296625,5.25,curated_mvp_v1
+Gia Lai,2023,Hè Thu,maize,57000,303240,5.32,curated_mvp_v1
+Thái Bình,2018,Đông Xuân,rice,77800,481164,6.18,curated_mvp_v1
+Thái Bình,2019,Đông Xuân,rice,78000,485160,6.22,curated_mvp_v1
+Thái Bình,2020,Đông Xuân,rice,78200,489832,6.27,curated_mvp_v1
+Thái Bình,2021,Đông Xuân,rice,78400,494920,6.31,curated_mvp_v1
+Thái Bình,2022,Đông Xuân,rice,78500,497990,6.34,curated_mvp_v1
+Thái Bình,2023,Đông Xuân,rice,78600,500826,6.37,curated_mvp_v1
+Thái Bình,2018,Hè Thu,rice,71800,422184,5.88,curated_mvp_v1
+Thái Bình,2019,Hè Thu,rice,72000,426240,5.92,curated_mvp_v1
+Thái Bình,2020,Hè Thu,rice,72200,430232,5.96,curated_mvp_v1
+Thái Bình,2021,Hè Thu,rice,72400,434400,6.00,curated_mvp_v1
+Thái Bình,2022,Hè Thu,rice,72500,437900,6.04,curated_mvp_v1
+Thái Bình,2023,Hè Thu,rice,72600,440922,6.07,curated_mvp_v1
+Thái Bình,2018,Đông Xuân,maize,7900,42976,5.44,curated_mvp_v1
+Thái Bình,2019,Đông Xuân,maize,8000,44000,5.50,curated_mvp_v1
+Thái Bình,2020,Đông Xuân,maize,8100,45036,5.56,curated_mvp_v1
+Thái Bình,2021,Đông Xuân,maize,8200,46002,5.61,curated_mvp_v1
+Thái Bình,2022,Đông Xuân,maize,8300,46958,5.66,curated_mvp_v1
+Thái Bình,2023,Đông Xuân,maize,8400,47964,5.71,curated_mvp_v1
+Nam Định,2018,Đông Xuân,rice,65800,394800,6.00,curated_mvp_v1
+Nam Định,2019,Đông Xuân,rice,66000,399300,6.05,curated_mvp_v1
+Nam Định,2020,Đông Xuân,rice,66200,403178,6.09,curated_mvp_v1
+Nam Định,2021,Đông Xuân,rice,66400,407032,6.13,curated_mvp_v1
+Nam Định,2022,Đông Xuân,rice,66600,410922,6.17,curated_mvp_v1
+Nam Định,2023,Đông Xuân,rice,66800,414828,6.21,curated_mvp_v1
+Nam Định,2018,Hè Thu,rice,59800,343252,5.74,curated_mvp_v1
+Nam Định,2019,Hè Thu,rice,60000,346800,5.78,curated_mvp_v1
+Nam Định,2020,Hè Thu,rice,60200,350364,5.82,curated_mvp_v1
+Nam Định,2021,Hè Thu,rice,60400,354144,5.86,curated_mvp_v1
+Nam Định,2022,Hè Thu,rice,60600,358146,5.91,curated_mvp_v1
+Nam Định,2023,Hè Thu,rice,60800,361152,5.94,curated_mvp_v1
+Nam Định,2018,Đông Xuân,maize,6100,32391,5.31,curated_mvp_v1
+Nam Định,2019,Đông Xuân,maize,6200,33170,5.35,curated_mvp_v1
+Nam Định,2020,Đông Xuân,maize,6300,34083,5.41,curated_mvp_v1
+Nam Định,2021,Đông Xuân,maize,6400,34996,5.47,curated_mvp_v1
+Nam Định,2022,Đông Xuân,maize,6500,35815,5.51,curated_mvp_v1
+Nam Định,2023,Đông Xuân,maize,6600,36696,5.56,curated_mvp_v1

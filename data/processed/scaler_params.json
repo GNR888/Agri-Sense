@@ -1,0 +1,69 @@
+{
+  "feature_min": {
+    "farm_lat": 9.73,
+    "farm_lon": 105.15,
+    "total_precip_mm": 212.87,
+    "mean_temp_c": 19.33265193370166,
+    "max_temp_c": 23.54386740331492,
+    "min_temp_c": 16.049834254143644,
+    "gdd_base10": 1689.21,
+    "mean_solar_mj": 10.129005524861878,
+    "mean_humidity_pct": 68.77637362637363,
+    "precip_cv": 0.21079472462304735,
+    "bulk_density_kg_per_dm3": 1.1467,
+    "cec_mmol_per_kg": 159.0,
+    "clay_pct": 26.75,
+    "nitrogen_cg_per_kg": 159.8333,
+    "ph": 5.5,
+    "sand_pct": 19.0667,
+    "silt_pct": 29.2667,
+    "soc_g_per_kg": 21.65,
+    "ndvi_peak": 0.17555902898311615,
+    "ndvi_days_to_peak": 0.0,
+    "ndvi_mean_season": 0.14155568480491637,
+    "price_vnd_per_kg": 7200.0
+  },
+  "feature_max": {
+    "farm_lat": 20.32,
+    "farm_lon": 108.2,
+    "total_precip_mm": 2513.2799999999997,
+    "mean_temp_c": 29.07073170731707,
+    "max_temp_c": 34.48494505494506,
+    "min_temp_c": 26.963008130081306,
+    "gdd_base10": 5425.58,
+    "mean_solar_mj": 20.109945054945054,
+    "mean_humidity_pct": 89.42762295081967,
+    "precip_cv": 1.889218571379562,
+    "bulk_density_kg_per_dm3": 1.305,
+    "cec_mmol_per_kg": 235.6667,
+    "clay_pct": 41.6333,
+    "nitrogen_cg_per_kg": 283.5,
+    "ph": 6.1,
+    "sand_pct": 37.8167,
+    "silt_pct": 42.9,
+    "soc_g_per_kg": 34.5667,
+    "ndvi_peak": 0.8703137040138245,
+    "ndvi_days_to_peak": 337.0,
+    "ndvi_mean_season": 0.7703372438748678,
+    "price_vnd_per_kg": 75000.0
+  },
+  "season_categories": [
+    "Hè Thu",
+    "Mùa",
+    "main",
+    "Đông Xuân"
+  ],
+  "crop_categories": [
+    "cashew_raw",
+    "coffee_green",
+    "maize",
+    "pepper_black",
+    "rice_paddy"
+  ],
+  "soil_texture_categories": [
+    "clay",
+    "clay loam",
+    "loam",
+    "silty clay loam"
+  ]
+}

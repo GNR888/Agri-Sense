@@ -1,0 +1,11 @@
+crop,price_vnd_per_kg,year,source
+rice_paddy,6500,2023,curated_mvp_v1
+rice_paddy,7200,2024,curated_mvp_v1
+coffee_green,52000,2023,curated_mvp_v1
+coffee_green,63000,2024,curated_mvp_v1
+cashew_raw,30000,2023,curated_mvp_v1
+cashew_raw,31500,2024,curated_mvp_v1
+pepper_black,70000,2023,curated_mvp_v1
+pepper_black,75000,2024,curated_mvp_v1
+maize,7000,2023,curated_mvp_v1
+maize,7300,2024,curated_mvp_v1
