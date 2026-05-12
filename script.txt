@@ -1,0 +1,562 @@
+================================================================================
+  AGRI-SENSE — DEMO SCRIPT
+  MVP Crop Recommendation System for Vietnamese Farmers
+================================================================================
+
+OVERVIEW
+--------
+Agri-Sense is an end-to-end crop recommendation system. A user clicks a
+location on an interactive map of Vietnam, selects a planting season, and
+receives the top 3 recommended crops — each with a predicted yield, a
+confidence score, price forecast, fertiliser plan, and farming guidance.
+
+The system pulls real-time data from three public satellite and climate APIs,
+feeds it through a machine learning pipeline, and serves everything through a
+FastAPI backend that the Next.js frontend consumes.
+
+This script walks through the demo screen by screen, explaining what you see,
+where the data comes from, and how the numbers are produced.
+
+
+================================================================================
+PART 1 — THE DASHBOARD (main page)
+================================================================================
+
+WHAT YOU SEE
+------------
+When you first open the app at http://localhost:3000, you land on the
+Dashboard. The screen is split roughly 60/40 — an interactive map of Vietnam
+on the left, and a Recommendation Panel on the right that starts empty.
+
+There is a navigation bar at the top with two links: "Dashboard" (current page)
+and "Market Prices" (covered later in Part 3).
+
+
+================================================================================
+PART 2 — THE MAP COMPONENT (VietnamMap)
+================================================================================
+
+WHAT YOU SEE
+------------
+The map is a standard Leaflet.js map (the same library used in OpenStreetMap)
+centered on Vietnam at zoom level 6, so you can see the whole country at once.
+
+When the map loads, you will see small circular markers placed on 13 provinces
+across the country — covering the Mekong River Delta in the south, the Red
+River Delta in the north, the Central Highlands, and key coastal areas. If you
+hover over a marker, a popup shows the province name, region, and the dominant
+crop grown there.
+
+When you click anywhere on the map, a green dot appears at the exact spot you
+clicked, and the recommendation panel on the right activates.
+
+WHAT IS HAPPENING BEHIND THE SCENES
+-------------------------------------
+1. The map makes one API call on page load: GET /provinces
+   This returns the 13 provinces stored in the backend's geo module
+   (utils/geo.py). For each province the backend stores: its name in English
+   and Vietnamese, which agroecological region it belongs to, its capital
+   coordinates for the map pin, and a separate "farm location" coordinate
+   (deliberately chosen to be in actual agricultural land, not the city centre,
+   because satellite data over urban areas is unreliable).
+
+2. When you click a point on the map, the frontend records the exact latitude
+   and longitude of your click. These are passed directly to the
+   Recommendation Panel — nothing else happens at this stage.
+
+3. The green dot is just a visual marker drawn in the browser. The system does
+   not snap your click to a province border; it keeps the exact coordinates you
+   clicked, which is important because soil and satellite data are fetched for
+   that precise location, not for a provincial average.
+
+
+================================================================================
+PART 3 — THE RECOMMENDATION PANEL (RecommendPanel)
+================================================================================
+
+WHAT YOU SEE
+------------
+After clicking the map, the panel on the right comes to life. It has several
+sections that are populated as the backend responds.
+
+  A. Season selector and mode toggle
+  B. Optional farmer inputs (soil overrides, farm size)
+  C. Three crop recommendation cards
+  D. Farm plan (if farm size is provided)
+  E. Soil health card
+  F. Warnings and data freshness indicators
+
+We will go through each one.
+
+
+--- A. SEASON SELECTOR AND MODE TOGGLE ---
+
+WHAT YOU SEE
+------------
+At the top of the panel there are two mode buttons: "Today" and "Forecast".
+
+  - "Today" mode uses the current date to figure out which growing season
+    Vietnam is currently in, and gives you recommendations for that season.
+
+  - "Forecast" mode lets you pick a target month (1–12) from a dropdown.
+    This is useful for planning ahead — e.g., "What should I plant if I want
+    to start in March?"
+
+WHAT IS HAPPENING BEHIND THE SCENES
+-------------------------------------
+Vietnam has three overlapping rice seasons whose dates vary by region. The
+backend's seasons module (utils/seasons.py) maps these precisely:
+
+  - Đông Xuân (Winter–Spring): transplant in Oct/Nov, harvest Jan/Feb.
+    This is the most productive season — cool, dry weather suits rice.
+  - Hè Thu (Summer–Autumn): transplant Apr/May, harvest Jul/Aug.
+    Hot and wet; higher pest pressure, lower yields.
+  - Mùa (Main/Rainy Season): transplant Jun/Jul, harvest Oct/Nov.
+    Traditional season. Lower yield potential.
+
+Not all regions follow all three seasons. The Mekong Delta can do all three
+(triple-cropping). The Red River Delta does two. The Central Highlands grows
+perennial crops like coffee year-round, so it uses an "annual" window.
+
+When you click Today or pick a forecast month, the backend calls
+resolve_season(province_key, ref_date). This function looks at your location
+and the date and returns the season name plus a flag if you are within a
+14-day "transition window" — i.e., one season is ending and the next is
+about to begin. If a transition is detected, the panel will show a second
+set of recommendations for the upcoming season alongside the current one.
+
+
+--- B. FARMER INPUTS (optional) ---
+
+WHAT YOU SEE
+------------
+Below the season selector are three optional input fields:
+
+  - pH: the acidity of the soil (scale 0–14; neutral is 7)
+  - Organic Carbon %: how much decomposed plant matter is in the soil
+  - Nitrogen (g/kg): the soil's nitrogen content
+  - Farm size (hectares): how large the farm is
+
+These fields come pre-populated with data fetched from a satellite soil
+database the moment you clicked the map. But a farmer who has done their own
+soil test can override these values.
+
+There is also a Farm Size field. If you fill this in, you get a farm plan that
+allocates your land across the three recommended crops.
+
+WHAT IS HAPPENING BEHIND THE SCENES — SOIL DATA
+-------------------------------------------------
+Soil data comes from SoilGrids 2.0, a global dataset produced by the
+International Soil Reference and Information Centre (ISRIC). It is accessed
+via a free REST API (rest.isric.org) — no key required.
+
+The backend queries seven soil properties at your exact latitude and longitude:
+  - pH in water (phh2o)
+  - Soil Organic Carbon (soc)
+  - Total Nitrogen
+  - Sand, Silt, Clay percentages
+  - Cation Exchange Capacity (CEC) — a measure of soil fertility
+  - Bulk Density
+
+These are averaged over the top 30 cm of soil (three depth bands: 0–5 cm,
+5–15 cm, 15–30 cm) because that is the root zone for most annual crops.
+
+From the sand, silt, and clay percentages the backend calculates a USDA soil
+texture class — terms like "sandy loam", "clay loam", "silty clay" — which
+is used later as a feature for the machine learning model.
+
+One important edge case: SoilGrids sometimes returns no data for pixels over
+rivers, coastlines, or dense urban areas. If the primary pixel is masked, the
+backend spiral-searches outward in small steps (up to ±0.02 degrees, roughly
+2 km) until it finds valid soil data. This prevents the system from silently
+returning zeros or crashing on coastal or deltaic clicks.
+
+
+--- C. THE THREE CROP RECOMMENDATION CARDS ---
+
+WHAT YOU SEE
+------------
+This is the heart of the demo. After a moment, three cards appear. Each one
+shows:
+
+  - Crop name and an emoji (e.g., "Rice Paddy 🌾")
+  - Predicted yield in tonnes per hectare (t/ha)
+  - A confidence badge: High (green), Medium (yellow), or Low (red)
+  - Expected revenue in Vietnamese Dong (VND) per hectare
+  - A 6-month price forecast chart
+  - Fertiliser recommendation (NPK quantities and timing)
+  - Farming method guidance (land prep, planting, irrigation, pest watch)
+  - Estimated harvest window (earliest, latest, optimal dates)
+
+WHAT IS HAPPENING BEHIND THE SCENES — THE FULL PIPELINE
+---------------------------------------------------------
+When you hit the request button, the frontend sends a POST request to
+/recommend with: lat, lon, mode, target month (if forecast), top_k (default 3),
+farm size (if entered), and any soil overrides.
+
+The backend then runs through these steps in order:
+
+STEP 1 — FETCH WEATHER DATA (NASA POWER API)
+The system calls NASA's POWER (Prediction Of Worldwide Energy Resources) API
+at power.larc.nasa.gov. This is a free public API that provides daily weather
+data derived from satellite observations — no API key needed.
+
+For the resolved season (e.g., Đông Xuân = Nov 15 to Apr 30), the backend
+requests:
+  - Daily average, maximum, and minimum air temperature (degrees C)
+  - Daily precipitation (mm)
+  - Relative humidity (%)
+  - Solar radiation — how much sunlight hits the ground (MJ/m²)
+  - Wind speed (m/s)
+
+These daily values are then aggregated into season-level features:
+  - Total seasonal rainfall (mm)
+  - Mean season temperature (°C)
+  - Growing Degree Days (GDD) — a measure of accumulated warmth above
+    a base temperature of 10°C. Crops need a certain GDD total to mature.
+  - Mean solar radiation
+
+Data is cached locally as Parquet files so repeat calls for the same
+location and season window are instant.
+
+STEP 2 — FETCH VEGETATION INDEX FROM SATELLITE (Sentinel-2)
+The backend queries the Microsoft Planetary Computer, which hosts a free
+archive of Sentinel-2 satellite imagery from the European Space Agency.
+
+It searches for cloud-free scenes (less than 40% cloud cover) over your
+location within the season window. For each valid scene it:
+  1. Reads the red light band (Band 4) and near-infrared band (Band 8).
+  2. Computes NDVI = (NIR − Red) / (NIR + Red).
+     NDVI (Normalised Difference Vegetation Index) ranges from -1 to +1.
+     Bare soil is around 0.1. Healthy dense vegetation is above 0.6.
+  3. Masks out pixels that are cloud, shadow, or water (using the satellite's
+     Scene Classification Layer) so only vegetation and bare soil pixels count.
+  4. Aggregates across all valid pixels to produce: mean NDVI for the season,
+     peak NDVI value, and the number of days from planting until NDVI peaks
+     (a proxy for crop growth rate).
+
+If no cloud-free scenes exist (e.g., for very early historical dates before
+2017), NDVI values are left as "not available" and the model handles the
+missing values in the imputation step below.
+
+STEP 3 — ASSEMBLE FEATURES AND HANDLE MISSING VALUES
+The backend now has a row of data for your location and season:
+  - 8 weather features
+  - 3 NDVI features
+  - 5 soil features (from SoilGrids)
+  - 6 geographic features (which region you're in, elevation zone)
+  - Plus one-hot encoded season and soil texture class
+
+Total: 28 features fed into the model.
+
+Missing values are filled using subset-mean imputation. The system groups
+historical training data by province and soil texture class, then fills
+missing values with the average for that group — not a global average. This
+matters because a clay soil in the Mekong Delta behaves very differently from
+a clay soil in the Central Highlands.
+
+All numeric features are then scaled to a 0–1 range using the minimum and
+maximum values recorded in the training data, which are stored in a file called
+scaler_params.json. The same scaling is applied at inference time so the model
+sees numbers in the same range as it was trained on.
+
+STEP 4 — CLASSIFY: WHICH CROPS ARE VIABLE HERE?
+The backend loads a pre-trained XGBoost Classifier. XGBoost is a gradient
+boosting algorithm — it builds many small decision trees in sequence, each one
+correcting the errors of the previous one, until the ensemble is accurate.
+
+Given the 28 scaled features, the classifier outputs a probability for each of
+the 5 canonical crops:
+  - rice_paddy
+  - coffee_green
+  - cashew_raw
+  - pepper_black
+  - maize
+
+Example output for a Mekong Delta click in Đông Xuân season:
+  rice_paddy: 0.85
+  maize: 0.12
+  coffee_green: 0.02
+  cashew_raw: 0.01
+  pepper_black: 0.00
+
+The top 3 by probability are selected as the recommendations. The classifier
+was trained on historical yield data from Vietnam's General Statistics Office
+(GSO) covering 13 provinces across roughly 4 years.
+
+STEP 5 — REGRESS: HOW MUCH WILL EACH CROP YIELD?
+For each of the top 3 crops, a second model — an XGBoost Regressor — predicts
+the yield in tonnes per hectare. It takes the same 28 features plus the crop
+label itself as input and outputs a single continuous number.
+
+Example: for rice_paddy in that Đông Xuân Mekong click, it might predict
+5.2 t/ha. For maize, it might predict 4.1 t/ha.
+
+STEP 6 — CONFIDENCE SCORE
+The confidence badge (High / Medium / Low) on each card comes directly from
+the classifier probability:
+  - High: probability ≥ 0.70
+  - Medium: probability 0.50 – 0.70
+  - Low: probability < 0.50
+
+If confidence is Low, a yellow warning banner appears at the bottom of the
+panel telling the user the model is uncertain and to consult a local agronomist.
+
+STEP 7 — 6-MONTH PRICE FORECAST
+Each crop card shows a line chart of expected price over the next 6 months
+(in VND per tonne). This comes from the market module (market/price_forecast.py).
+
+The forecast is built in three layers:
+  1. A hardcoded baseline price grounded in GSO 2024 averages:
+       rice_paddy:   7,200,000 VND/tonne
+       coffee_green: 63,000,000 VND/tonne
+       cashew_raw:   31,500,000 VND/tonne
+       pepper_black: 75,000,000 VND/tonne
+       maize:         7,300,000 VND/tonne
+
+  2. Seasonal multipliers: each crop has a 12-month profile of multipliers
+     (e.g., rice prices dip during harvest months when supply peaks and rise
+     in the lean season before the next harvest).
+
+  3. A supply shock adjustment: if the Open-Meteo 14-day forecast shows
+     extreme weather (more than 3 heavy rain days above 10 mm, or more than
+     3 days above 32°C), the price forecast gets a small upward nudge because
+     supply disruptions tend to push prices up.
+
+Expected revenue per hectare = predicted yield × month-3 forecast price.
+
+STEP 8 — FERTILISER RECOMMENDATION
+The fertiliser module (recommendations/fertiliser.py) generates an NPK
+(Nitrogen, Phosphorus, Potassium) schedule. The recommended doses are based
+on the crop type and adjusted by the soil's current pH and nutrient levels
+pulled from SoilGrids.
+
+For example, if soil pH is below 5.5 (acidic), the plan will also recommend
+lime application with a specific dosage to correct acidity before planting.
+The schedule is broken into application timings (e.g., basal fertiliser
+at planting, top-dressing at weeks 3, 6, and 10).
+
+STEP 9 — FARMING METHODS
+The farming methods module (recommendations/farming_methods.py) provides
+region-specific guidance for land preparation, seed/seedling density, water
+management, and pest watch. These are not generated by the ML model — they
+are curated lookup tables based on Vietnamese agricultural extension guidelines.
+
+For example, rice in the Mekong Delta gets guidance specific to the triple-crop
+system: puddled field preparation, transplanting at a specific density, four
+irrigation stages (establishment, active tillering, ripening, maturity), and
+alerts for brown planthopper, which is the dominant pest threat in that region.
+
+STEP 10 — HARVEST TIMING
+The harvest timing module (recommendations/harvest_timing.py) takes the
+planting date (derived from the season window), the crop, and the region, and
+outputs a range of expected harvest dates: earliest, latest, and optimal. It
+also flags climate risks — flooding risk for Mekong Delta crops, heat stress
+for Central Highlands coffee during dry season, and drought risk for coastal
+crops in the Central Coast.
+
+
+--- D. FARM PLAN (if farm size is entered) ---
+
+WHAT YOU SEE
+------------
+If you typed a farm size (e.g., 2 hectares) into the Farm Size field, a pie
+chart appears below the three recommendation cards. It shows how to allocate
+your land across the top 3 crops, with hectares and percentages for each slice.
+Below the chart is a total expected revenue figure.
+
+WHAT IS HAPPENING BEHIND THE SCENES
+-------------------------------------
+The farm plan algorithm (recommendations/farm_plan.py) works as follows:
+
+  1. Allocate land in proportion to each crop's classifier probability. A crop
+     with 85% probability gets 85% of the total land after the reserve is set
+     aside.
+
+  2. Always hold back 10% of the farm area as a replanting buffer in case an
+     early crop fails or conditions change.
+
+  3. Weather hedge: if the Open-Meteo 14-day forecast flagged extreme weather,
+     the allocation for the top crop is capped at 60% of total area. The
+     leftover is redistributed to the second and third crops. This reduces the
+     risk of losing everything if the top recommendation fails due to a storm.
+
+  4. Total expected revenue = sum of (allocated hectares × yield × month-3
+     price) for all three crops.
+
+
+--- E. SOIL HEALTH CARD ---
+
+WHAT YOU SEE
+------------
+At the bottom of the panel, a card summarises the soil at your clicked location.
+It shows a health score from 1 to 10, a nutrient status summary (adequate,
+deficient, or excess for nitrogen, phosphorus, and potassium), and a list of
+the top 2 soil issues detected.
+
+WHAT IS HAPPENING BEHIND THE SCENES
+-------------------------------------
+The soil summary module (recommendations/soil_summary.py) scores the soil
+using four signals from SoilGrids:
+  - pH: penalises very acidic (< 5.5) or very alkaline (> 8.0) values
+  - CEC: higher cation exchange capacity = better nutrient retention = higher score
+  - Organic Carbon: low organic matter reduces score
+  - Texture: well-draining loam textures score highest; heavy clays and
+    pure sands score lower
+
+The top 2 issues are picked from a list that includes: salinity intrusion
+(critical in southern Mekong Delta due to seawater tidal push), acid sulfate
+soils (widespread in delta lowlands and directly toxic to rice roots),
+low organic matter, and slope erosion risk.
+
+
+--- F. WARNINGS AND DATA FRESHNESS ---
+
+WHAT YOU SEE
+------------
+A thin strip at the bottom of the panel shows when each data source was last
+refreshed — NASA POWER weather is daily, SoilGrids soil data is annual, and
+Sentinel-2 NDVI has a 5–14 day lag depending on the satellite's revisit time
+and cloud cover.
+
+If any warning flags were raised, they appear in yellow/red banners:
+  - Low model confidence (< 0.50)
+  - Extreme weather forecast
+  - No recent cloud-free satellite image available
+
+These are not blocking errors — the system still returns recommendations — but
+they tell the user to interpret results with more caution.
+
+
+================================================================================
+PART 4 — THE MARKET PRICES PAGE
+================================================================================
+
+WHAT YOU SEE
+------------
+Click "Market Prices" in the navigation bar to open this page. At the top is
+a dropdown to select one of the 5 canonical crops. Below it you see:
+
+  - A historical price chart: bar chart showing monthly prices for the past
+    12 months (default), with an overlay line showing the trend.
+  - A forecast chart: the next 6 months, shown as a line with shaded confidence
+    bands (upper and lower bounds).
+  - Four summary metrics:
+      * Volatility Index (a decimal number) and a label: Low, Moderate, or High
+      * Best selling months (when prices are historically highest)
+      * Months to avoid selling (when prices are historically lowest)
+      * Key drivers: a short list of supply and demand factors
+
+WHAT IS HAPPENING BEHIND THE SCENES
+-------------------------------------
+The frontend calls GET /market/prices?crop=rice_paddy&months_back=12
+&months_forward=6. The backend's market module (market/price_forecast.py)
+builds the response in three steps:
+
+HISTORICAL PRICES
+The baseline price (e.g., 7.2M VND/tonne for rice) is multiplied by monthly
+seasonal multipliers for the past 12 months. These multipliers are empirically
+grounded in GSO price patterns — for instance, rice prices typically fall 5–8%
+in March (main harvest) and recover in August (lean season). The "source" field
+on each historical data point is labelled "GSO-derived estimate" to be
+transparent that this is a model, not a live price feed.
+
+FORECAST PRICES
+The same multiplier logic is applied to future months. If an extreme weather
+flag is active (from the Open-Meteo 14-day forecast), a supply shock multiplier
+adds a small upward adjustment. The upper and lower confidence bands are set
+at ±10% of the forecast price (wider for more volatile crops like pepper).
+
+VOLATILITY INDEX
+Volatility is calculated as the standard deviation of the month-over-month
+percentage price changes divided by the mean price. A result below 0.08 is
+labelled Low, 0.08–0.15 is Moderate, above 0.15 is High. Coffee and pepper
+score High because international commodity prices are far more volatile than
+domestically-consumed staples like rice.
+
+KEY DRIVERS
+These are static, crop-specific text labels — for example, for coffee: "Global
+Arabica/Robusta price spread", "Seasonal harvest timing Central Highlands",
+"Export demand from Europe and the US". For rice: "Domestic procurement policy
+(VFA reserve purchases)", "Regional supply (Mekong Delta triple-crop output)".
+These are not generated dynamically; they reflect known structural drivers for
+each crop.
+
+
+================================================================================
+PART 5 — SYSTEM ARCHITECTURE SUMMARY
+================================================================================
+
+For a complete picture, here is the data flow from click to screen:
+
+  1. USER CLICKS MAP
+     → Frontend (Next.js) sends POST /recommend (lat, lon, season, mode)
+
+  2. BACKEND VALIDATES REQUEST
+     → Confirms coordinates are within Vietnam's bounding box
+     → Resolves season from date and region
+
+  3. DATA FETCHING (three real-time API calls)
+     → NASA POWER: daily weather for the season window
+     → SoilGrids 2.0: soil properties at the clicked point
+     → Planetary Computer / Sentinel-2: NDVI vegetation index
+
+  4. FEATURE ENGINEERING
+     → Aggregate daily weather to season totals/averages
+     → Compute Growing Degree Days, NDVI peak and timing
+     → Fill any missing values using province+texture group means
+     → Scale all features to [0, 1] range
+
+  5. MACHINE LEARNING
+     → XGBoost Classifier: outputs probability for each of 5 crops
+     → XGBoost Regressor: outputs predicted yield (t/ha) per crop
+     → Select top 3 crops by probability
+
+  6. BUSINESS LOGIC LAYER
+     → Price forecast (seasonal multipliers + weather shock)
+     → Fertiliser plan (NPK schedule adjusted for soil pH and nutrients)
+     → Farming methods (region-specific cultivation guidance)
+     → Harvest timing (planting date → harvest window + climate risks)
+     → Farm plan (probability-weighted land allocation + weather hedge)
+     → Soil health score (composite of pH, CEC, organic carbon, texture)
+
+  7. RESPONSE ASSEMBLED AND RETURNED
+     → Frontend renders three crop cards + soil card + charts
+
+Public data sources used (all free, no API keys):
+  - NASA POWER (power.larc.nasa.gov)
+  - SoilGrids 2.0 (rest.isric.org)
+  - Microsoft Planetary Computer / Sentinel-2
+  - Open-Meteo (short-term weather forecast)
+  - Vietnam General Statistics Office (GSO) — offline CSV download
+
+
+================================================================================
+KNOWN LIMITATIONS (to mention during demo Q&A)
+================================================================================
+
+  - The training dataset has 270 rows covering 13 provinces and 5 crops across
+    ~4 years of GSO data. This is small for machine learning. The classifier
+    achieves ~81% accuracy and the yield model has an error of ±0.43 t/ha.
+    Both will improve significantly with more training data.
+
+  - Prices are model-generated estimates, not live market data. A future version
+    would scrape real-time price feeds from provincial commodity exchanges.
+
+  - Sentinel-2 NDVI data has a 5–14 day lag due to satellite revisit time and
+    cloud masking. In a cloudy monsoon season, there may be no valid image for
+    weeks, in which case NDVI is left missing and the ML model uses imputed
+    values.
+
+  - The system covers 5 crops. Vietnam has hundreds of commercially grown
+    crops. Expansion to include vegetables, fruit trees, aquaculture, and
+    industrial crops is planned for v2.
+
+  - Confidence scores come from the classifier's raw probability output. They
+    are not calibrated against observed prediction accuracy, so treat a 0.85
+    confidence score as "the model is relatively sure" rather than "this will
+    be right 85% of the time."
+
+================================================================================
+END OF DEMO SCRIPT
+================================================================================
